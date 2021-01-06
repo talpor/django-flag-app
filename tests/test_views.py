@@ -43,7 +43,7 @@ class TestSetFlag(BaseFlagViewTest):
         response = self.client.post(self.url, data=data)
         response_data = {
             'status': 1,
-            'msg': [f'This content has already been flagged by the user ({self.user_1.username})']
+            'msg': [f'This content has already been flagged by the user']
         }
         self.assertEqual(response.status_code, 200)
         self.assertDictEqual(response.json(), response_data)
@@ -56,7 +56,7 @@ class TestSetFlag(BaseFlagViewTest):
         response = self.client.post(self.url, data=data)
         response_data = {
             'status': 1,
-            'msg': [f'This content has not been flagged by the user ({self.user_1.username})']
+            'msg': [f'This content has not been flagged by the user']
         }
         self.assertEqual(response.status_code, 200)
         self.assertDictEqual(response.json(), response_data)

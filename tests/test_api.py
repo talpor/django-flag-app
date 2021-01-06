@@ -71,7 +71,7 @@ class FlagAPIViewsTest(BaseFlagAPITest):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             response.json()['detail'],
-            [f'This content has already been flagged by the user ({self.user_1.username})']
+            [f'This content has already been flagged by the user']
         )
 
     def test_flagging_unflagged_object(self):
@@ -84,7 +84,7 @@ class FlagAPIViewsTest(BaseFlagAPITest):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             response.json()['detail'],
-            [f'This content has not been flagged by the user ({self.user_1.username})']
+            [f'This content has not been flagged by the user']
             )
 
     def test_unflagging_successfully(self):

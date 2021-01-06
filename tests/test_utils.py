@@ -75,7 +75,7 @@ class TestProcessFlaggingRequest(BaseFlagTest):
         response = process_flagging_request(user=self.user_1, model_obj=self.post, data=data)
         response_data = {
             'status': 1,
-            'msg': [f'This content has already been flagged by the user ({self.user_1.username})']
+            'msg': [f'This content has already been flagged by the user']
         }
         self.assertDictEqual(response, response_data)
 
@@ -87,6 +87,6 @@ class TestProcessFlaggingRequest(BaseFlagTest):
         response = process_flagging_request(user=self.user_1, model_obj=self.post, data=data)
         response_data = {
             'status': 1,
-            'msg': [f'This content has not been flagged by the user ({self.user_1.username})']
+            'msg': [f'This content has not been flagged by the user']
         }
         self.assertDictEqual(response, response_data)

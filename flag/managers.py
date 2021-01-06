@@ -50,26 +50,22 @@ class FlagInstanceManager(models.Manager):
 
     def _clean(self, reason, info):
         cleaned_reason = self._clean_reason(reason)
-        cleaned_info = None
 
-        if cleaned_reason == self.model.reason_values[-1]:
-            cleaned_info = info
-            if not cleaned_info:
-                raise ValidationError(
-                    _('Please supply some information as the reason for flagging'),
-                    params={'info': info},
-                    code='required'
-                )
-        return cleaned_reason, cleaned_info
+        if cleaned_reason == self.model.reason_values[-1] and not info:
+            raise ValidationError(
+                _('Please supply some information as the reason for flagging'),
+                params={'info': info},
+                code='required'
+            )
+        return cleaned_reason
 
     def create_flag(self, user, flag, reason, info):
-        cleaned_reason, cleaned_info = self._clean(reason, info)
+        cleaned_reason = self._clean(reason, info)
         try:
-            self.create(flag=flag, user=user, reason=cleaned_reason, info=cleaned_info)
+            self.create(flag=flag, user=user, reason=cleaned_reason, info=info)
         except IntegrityError:
             raise ValidationError(
-                    _('This content has already been flagged by the user (%(user)s)'),
-                    params={'user': user},
+                    _('This content has already been flagged by the user'),
                     code='invalid'
                 )
 
@@ -78,8 +74,7 @@ class FlagInstanceManager(models.Manager):
             self.get(user=user, flag=flag).delete()
         except self.model.DoesNotExist:
             raise ValidationError(
-                _('This content has not been flagged by the user (%(user)s)'),
-                params={'user': user},
+                _('This content has not been flagged by the user'),
                 code='invalid'
             )
 

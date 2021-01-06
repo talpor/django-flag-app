@@ -189,7 +189,7 @@ class TestFlagInstanceManager(BaseFlagModelTest):
         with self.assertRaises(ValidationError) as error:
             FlagInstance.objects.create_flag(user, flag, reason, info)
 
-        self.assertEqual(error.exception.messages, [f'This content has already been flagged by the user ({user})'])
+        self.assertEqual(error.exception.messages, [f'This content has already been flagged by the user'])
 
     def test_delete_flag_without_flagging(self):
         user = self.user_1
@@ -198,4 +198,4 @@ class TestFlagInstanceManager(BaseFlagModelTest):
         with self.assertRaises(ValidationError) as error:
             FlagInstance.objects.delete_flag(user, flag)
 
-        self.assertEqual(error.exception.messages, [f'This content has not been flagged by the user ({user})'])
+        self.assertEqual(error.exception.messages, [f'This content has not been flagged by the user'])
